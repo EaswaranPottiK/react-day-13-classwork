@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import './Body.css'
 import { act } from 'react-dom/test-utils'
 
@@ -18,14 +18,21 @@ const Body = (props) => {
       case "clearText":
           return ''
       case "copyToClipboard":
-        navigator.clipboard.writeText(state);
-        break;
+        if(action.value != undefined){
+          navigator.clipboard.writeText(action.value);
+        }   
+        return state;
       case "trim":
         return state.trim();
       default:
         break;
     }
   }
+
+  const [backupOfText,setbackupOfText] = useState('')
+  useEffect(()=>{
+    setbackupOfText(text)
+  },[text])
   
   return (
     <div className='all' data-theme={props.isDark ? "dark":""} style={{minHeight:'85vh',padding:'15vh 0 0 0'}}>
@@ -43,9 +50,9 @@ const Body = (props) => {
           </div>
           <br></br><br></br>
           <h1>Summery of your text</h1>
-          <p style={{marginTop:'10px'}}>Number of words: {text.length} </p>
-          <p style={{marginTop:'10px'}}>Number of Charecters: {text.len}</p>
-          <p style={{marginTop:'10px'}}>Reading time: </p>
+          <p style={{marginTop:'10px'}}>Number of words: {backupOfText.length} </p>
+          <p style={{marginTop:'10px'}}>Number of Charecters: { text==='' ? 0:backupOfText.trim().split(new RegExp("\\s+")).length}</p>
+          <p style={{marginTop:'10px'}}>Reading time: {text ==='' ?0:backupOfText.trim().split(new RegExp("\\s+")).length*0.08}</p>
           <br></br>
           <p style={{textAlign:'center',fontSize:'26px',fontWeight:'600'}}>Preview Document</p>
           <textarea style={{width:'100%',minHeight:'15vh',border:'1px solid #ced4da', fontSize:'20px'}} value={text} readOnly></textarea>

@@ -10,7 +10,7 @@ const Header = (props) => {
     <div className='header' data-theme={props.isDark ? "dark":""} style={{display:'flex',justifyContent:'space-between',padding:'1% 1% 1% 1%'}}>
         <div style={{display:'flex',gap:'4vh',alignItems:'center'}}>
             <p style={{color:'#06B6D4',fontSize:'20px',fontWeight:'600'}}>TextUtils</p>
-            <p>Home</p>
+            <p> Home</p>
             <p className='AboutUscontactUs'>About Us</p>
             <p className='AboutUscontactUs'>Contact</p>
         </div>
